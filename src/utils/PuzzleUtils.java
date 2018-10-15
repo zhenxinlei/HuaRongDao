@@ -1,7 +1,6 @@
 package utils;
 
 import puzzle.Board;
-import puzzle.BoardState;
 
 public class PuzzleUtils {
 	
@@ -41,36 +40,10 @@ public class PuzzleUtils {
 		
 		
 	}
-	/**
-	 * 
-	 * @param board_vector
-	 * @return
-	 * 
-	 * shape id 
-	 * [[4,4,7,7],
-	 *  [4,4,5,5],
-	 *  [0,0,5,5],
-	 *  [5,7,7,1],
-	 *  [5,7,7,1]]
-	 */
-	public static boolean validateSetup(int[] board_vector){
-		
-		
-		
-		
-		return false;
-	}
-	
-	public static BoardState getBoardState(int[][] board){
-		
-		
-		return null;
-		
-	}
 	
 	public static int[][] pharseTileCoord(String str){
 		// str="0,0,1,1;2,1,2,2;...;3,1,4,1;"
-		String[] diagCos =str.split(";");
+		String[] diagCos =str.trim().split(";");
 		
 		if( diagCos.length!=Board.TILES_NUM)
 			throw new IllegalArgumentException("Missing tiles input");
@@ -78,7 +51,7 @@ public class PuzzleUtils {
 		int[][] tileCos = new int[diagCos.length][4];
 		
 		for (int i=0; i<diagCos.length;i++){
-			String[] co = diagCos[i].split(",");
+			String[] co = diagCos[i].trim().split(",");
 			if (co.length!=4)
 				throw new IllegalArgumentException("Invalid input"+co.length);
 			for (int j=0; j<4;j++){

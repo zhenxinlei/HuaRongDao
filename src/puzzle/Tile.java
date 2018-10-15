@@ -29,7 +29,7 @@ public class Tile {
 	public void setPosition(int upLeftRow, int upLeftCol,  int lowRightRow, int lowRightCol){
 		
 		if (lowRightRow-upLeftRow+1!=row || lowRightCol-upLeftCol+1!=col )
-			throw new IllegalArgumentException(" Invalid position vs tile shape ");
+			throw new IllegalArgumentException(" Invalid position vs tile shape ("+ upLeftRow+","+ upLeftCol+") -("+ lowRightRow+","+lowRightCol+")");
 		
 		this.upLeft[0] = upLeftRow;
 		this.upLeft[1] = upLeftCol;

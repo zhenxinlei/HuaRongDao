@@ -1,0 +1,58 @@
+This puzzle is to slid tiles from starting position to target position. In order word, it's finding the best sequence moves, 
+we can consider it as finding shortest path from start-state to target-state.
+
+1. We have a Board class (internally using 2d array to represent) to hold tiles. Each tile has identical id, and shape_id depends on tiles' shape.
+And 0 in board mean empty space. We keep checking new state by moving tiles, and if the new state == target. 
+
+i.e. 
+each number represent one unique tile's id on the board
+
+|1|1|5|5
+|1|1|3|4
+|0|0|3|4
+|2|7|7|8
+|2|6|6|9
+(tile id )
+
+2. 
+for case below, although tile id arrangement is different, but their optimal is the same. So we can consider they are the same state.
+To achieve this, we use shape id, each shape of tile has same shape id.  
+|1|1|5|5       |1|1|5|5        |1|1|2|2
+|1|1|3|4       |1|1|4|3        |1|1|3|3
+|0|0|3|4  <=>  |0|0|4|3  <==>  |0|0|3|3
+|2|7|7|8       |2|7|7|8        |3|2|2|9
+|2|6|6|9       |2|6|6|9        |3|2|2|9
+(tile id )     (tile id )      (shape id )
+
+3. We flatten tiles' shape_id in borad matrix , and use it as the board's state id. Will use this state id in BFS to remember if visited the state
+and we have better path. 
+
+4. To find shortest path, I am using BFS. 
+	There is a Map chldToParent storing current_state : parent_borad_tiles_id
+	and a Map stateToStep storing steps to current state, current_state : step_count
+	
+	every time after moving a tile, we check if state exist in two maps:
+	 - if no, new state adding to queue will check it's child state later 
+	 -if yes, visited before, check if we have improvement (less step ) this time
+
+	if current state == target, we know we find a shortest path , and know the step count needed. 
+	
+5. Printing moves, basically we trace back using chldToParent to the beginner, in the meantime we push states to the end of list.
+	Print from begin of list will print out move in sequence. 
+	
+6. Last but not the least, running the process. 
+	- setup: in config/setup.properties, put two line like following: 
+	start.tiles.setup=0,0,1,1;3,0,4,0;1,2,2,2;1,3,2,3;0,2,0,3;4,1,4,2;3,1,3,2;3,3,3,3;4,3,4,3
+	end.tiles.setup=0,0,0,1;0,2,1,3;1,0,2,0;1,1,2,1;3,0,3,0;4,0,4,0;3,1,3,2;4,1,4,2;3,3,4,3
+	
+	every four number separated by ";" represent upper left and lower right position of a tile is stored in the board's matrix
+	
+	ie 0,0,1,1 means 2x2 tile is placed in with upper left in matrix[0][0], lower right in matrix[1][1]
+		4,3,4,3 means 1x1 tile is placed in matrix[4][3] ( == upper left in matrix[4][3], lower right in matrix[4][3])
+		
+		
+	- run: java -cp <PATH_TO_JAR>:<PATH_TO_setup.properties> src.puzzle.Solver
+	
+	- output: output.txt
+	
+	 
