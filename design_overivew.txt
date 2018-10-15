@@ -51,7 +51,7 @@ and we have better path.
 		4,3,4,3 means 1x1 tile is placed in matrix[4][3] ( == upper left in matrix[4][3], lower right in matrix[4][3])
 		
 		
-	- run: java -cp <PATH_TO_JAR>:<PATH_TO_setup.properties> src.puzzle.Solver
+	- run: java -cp <PATH_TO_JAR>/blk_puzzle.jar:<PATH_TO_setup.properties> puzzle.Solver
 	
 	- output: output.txt
 	

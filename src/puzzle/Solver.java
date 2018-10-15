@@ -28,29 +28,31 @@ public class Solver {
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		} 
+		}
 
-		
 		Properties prop = new Properties();
 		String filename = "setup.properties";
 		InputStream propertyIS = Solver.class.getClassLoader().getResourceAsStream(filename);
-		
-		try {
-			prop.load(propertyIS);
-			for (String name : prop.stringPropertyNames()) {
-				String value = prop.getProperty(name);
-				System.setProperty(name, value);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
+		if (propertyIS != null) {
 			try {
-				propertyIS.close();
+				prop.load(propertyIS);
+				for (String name : prop.stringPropertyNames()) {
+					String value = prop.getProperty(name);
+					System.setProperty(name, value);
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} finally {
+				try {
+					propertyIS.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+		} else {
+			System.out.println(" use default properties setup");
 		}
 		
 		
@@ -88,7 +90,7 @@ public class Solver {
 	
 	private static void setup(Board mainBoard,Board targetBoard) {
 		String start_setup=System.getProperty("start.tiles.setup", "0,0,1,1;3,0,4,0;1,2,2,2;1,3,2,3;0,2,0,3;4,1,4,2;3,1,3,2;3,3,3,3;4,3,4,3");
-		String end_setup=System.getProperty("end.tiles.setup", "0,0,1,1;3,0,4,0;1,2,2,2;1,3,2,3;0,2,0,3;4,1,4,2;3,1,3,2;3,3,3,3;4,3,4,3");
+		String end_setup=System.getProperty("end.tiles.setup", "0,0,0,1;0,2,1,3;1,0,2,0;1,1,2,1;3,0,3,0;4,0,4,0;3,1,3,2;4,1,4,2;3,3,4,3");
 		int[][] tileCos = PuzzleUtils.pharseTileCoord(start_setup);
 																				
 		//Board mainBoard = new Board();
